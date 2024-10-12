@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>롤 전적 검색</title>
+    <link rel="stylesheet" href="/css/style.css">  <!-- CSS 파일 연결 -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #2c3e50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        .container {
+            margin: 20px auto;
+            width: 50%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .search-bar input {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 16px;
+        }
+        .search-bar button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            text-align: center;
+        }
+        .result img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+        .result h3 {
+            margin-top: 10px;
+            color: #2c3e50;
+        }
+        .result p {
+            margin-top: 5px;
+            color: #34495e;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>롤 소환사 전적 검색</h1>
+</header>
+
+<div class="container">
+    <!-- 검색창 -->
+    <div class="search-bar">
+        <form action="/summoner/search" method="get">
+            <input type="text" name="summonerName" placeholder="소환사 이름을 입력하세요" required>
+            <button type="submit">검색</button>
+        </form>
+    </div>
+
+    <!-- 검색 결과 -->
+    <div class="result">
+        <!-- 소환사 이름이 있으면 결과 표시 -->
+        <div th:if="${summoner != null}">
+            <img th:src="@{/images/profile-icons/{profileIconId}(profileIconId=${summoner.profileIconId})}" alt="소환사 아이콘">
+            <h3 th:text="${summoner.name}">소환사 이름</h3>
+            <p>레벨: <span th:text="${summoner.summonerLevel}">레벨</span></p>
+        </div>
+
+        <!-- 소환사가 검색되지 않았을 때 -->
+        <div th:if="${summoner == null}">
+            <p>검색 결과가 없습니다. 소환사 이름을 확인해 주세요.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
